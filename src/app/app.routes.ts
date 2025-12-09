@@ -40,6 +40,14 @@ export const routes: Routes = [
       standalone + lazy-load の組み合わせで最適化されている
     */
   },
+  {
+    // :idを追加 → URLで特定の商品を指定可能 ProductListComponentでリンクを設定
+    path: 'detail/:id',
+    loadComponent: () =>
+      import('./features/product/product-detail/product-detail.component').then(
+        (m) => m.ProductDetailComponent
+      ),
+  },
 ];
 
 /*
