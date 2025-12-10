@@ -4,6 +4,9 @@ import { CommonModule } from '@angular/common';
 // <a [routerLink]="...">でリンクを作る場合に必要
 import { RouterModule } from '@angular/router';
 
+// 商品データをインポート（id を含む）
+import { products, Product } from '../data/products';
+
 /*
   ProductListComponent
   商品一覧ページを表示するコンポーネント
@@ -23,9 +26,9 @@ import { RouterModule } from '@angular/router';
 export class ProductListComponent {
   /*
     products配列
-    ダミーデータとして1～4を用意
+    ダミーデータとして一覧表示
     実際は ProductServiceを注入してHTTPで取得
     この変数をテンプレート内で*ngForなどで繰り返し表示
   */
-  products: any = [1, 2, 3, 4];
+  products: Product[] = products;
 }

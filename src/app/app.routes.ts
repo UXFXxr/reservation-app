@@ -1,57 +1,28 @@
+// src/app/app.routes.ts
 import { Routes } from '@angular/router';
-
-/*
-  ★ ポイント
-  loadComponentを使う場合は、コンポーネントを静的にimportする必要なし
-  URLにアクセスしたときにだけコンポーネントを読み込むため初回ロードが軽くなる
-  standalone コンポーネントとの組み合わせが推奨
-*/
 
 export const routes: Routes = [
   {
-    // -------------------------------------------
-    // トップページ（ルート /）
-    // -------------------------------------------
-    // loadComponent で遅延読み込みを指定
+    // トップページ（一覧）
     path: '',
     loadComponent: () =>
       import('./features/product/product-list/product-list.component').then(
         (m) => m.ProductListComponent
       ),
-    /*
-      補足
-      このルートにアクセスすると ProductListComponent が表示される
-      デフォルト outlet に差し込まれる
-      初回ロード時には読み込まれず、アクセス時にダウンロード
-    */
+    // 必要なら pathMatch: 'full' を追加（リダイレクトがある場合など）
   },
   {
-    // -------------------------------------------
-    // 詳細ページ（/detail）
-    // -------------------------------------------
-    path: 'detail',
-    loadComponent: () =>
-      import('./features/product/product-detail/product-detail.component').then(
-        (m) => m.ProductDetailComponent
-      ),
-    /*
-      補足
-      /detail にアクセスすると ProductDetailComponent が表示される
-      standalone + lazy-load の組み合わせで最適化されている
-    */
-  },
-  {
-    // :idを追加 → URLで特定の商品を指定可能 ProductListComponentでリンクを設定
+    // 商品詳細：id を受け取る
     path: 'detail/:id',
     loadComponent: () =>
       import('./features/product/product-detail/product-detail.component').then(
         (m) => m.ProductDetailComponent
       ),
   },
+  {
+    // 未定義パスはトップへリダイレクト（または 404 コンポーネントにする）
+    path: '**',
+    redirectTo: '',
+    pathMatch: 'full',
+  },
 ];
-
-/*
-  デフォルト outlet に差し込むため、AppComponent の <router-outlet> に表示される
-  他のページを追加する場合は routes 配列にオブジェクトを追加するだけ
-  静的 import は不要で、必要なときだけコンポーネントが読み込まれる
-*/

@@ -4,13 +4,13 @@
       <!-- ['/detail'] app.routes.ts -->
       <a [routerLink]="['/detail', product.id]">
         <div class="card h-100">
-          <img src="./assets/img/500x300.png" class="card-img-top" alt="..." />
+          <img src="./assets/img/300x300.jpg" class="card-img-top" alt="..." />
           <div class="card-body">
             <h5 class="card-title">Card title</h5>
             <p class="card-text">
-              This is a wider card with supporting text below as a natural lead-in to additional
-              content. This content is a little bit longer.
+              {{ product.name }}
             </p>
+            <p>{{ product.description || '説明なし' }}</p>
           </div>
           <div class="card-footer">
             <small class="text-body-secondary">Last updated 3 mins ago</small>
