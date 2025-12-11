@@ -1,49 +1,53 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-// <a [routerLink]="...">でリンクを作る場合に必要
 import { RouterModule } from '@angular/router';
-
-// 商品データをインポート products.ts
 import { products, Product } from '../data/products';
+import { listProducts } from '../data/list-products';
 
-/*
-  ProductDetailComponent
-  商品の詳細ページを表示するコンポーネント
-  Standaloneコンポーネントとして定義
-  AppComponentの<router-outlet>に差し込まれる
-*/
 @Component({
-  selector: 'app-product-detail', // HTMLで使うタグ名
-  standalone: true, // NgModuleに登録せず単独で使用可能
+  selector: 'app-product-detail',
+  standalone: true,
   imports: [
-    CommonModule, // *ngIf などの基本ディレクティブを利用可能にする
-    RouterModule, // <a [routerLink]="...">でリンクを作る場合に必要
+    CommonModule, // *ngIf や *ngFor などの基本ディレクティブを使うために必要
+    RouterModule, // <a [routerLink]> を使う場合に必要
   ],
-  templateUrl: './product-detail.component.html', // HTMLテンプレートファイル
-  styleUrls: ['./product-detail.component.scss'], // スタイルファイル
+  templateUrl: './product-detail.component.html',
+  styleUrls: ['./product-detail.component.scss'],
 })
 export class ProductDetailComponent {
   /*
-    product
-    URLで受け取った id に対応する商品データ
-    見つからない場合は undefined
+    product:
+    URLパラメータで指定されたIDに対応する単一の商品データ
+    見つからなければ undefined
   */
   product?: Product;
 
+  /*
+    products:
+    既存の全商品配列
+    リストページ用など、元のテンプレートを動かすために保持
+  */
+  // リストページ用のデータをインポート
+  products: Product[] = listProducts;
+
+  /*
+    relatedProducts:
+    詳細ページ専用のループ用配列（自分以外の商品などを表示）
+  */
+  relatedProducts: Product[] = [];
+
   constructor(private route: ActivatedRoute) {
-    /*
-      URLパラメータから id を取得
-      例: /detail/1 → id = 1
-    */
+    // URLパラメータから id を取得
     const idParam = this.route.snapshot.paramMap.get('id');
     const id = idParam ? Number(idParam) : null;
 
-    /*
-      products 配列から該当する商品を検索
-    */
     if (id !== null) {
+      // 単一商品の取得
       this.product = products.find((p) => p.id === id);
+
+      // 詳細ページ専用ループ用配列を設定（例：自分以外の商品を関連商品として表示）
+      this.relatedProducts = products.filter((p) => p.id !== id);
     }
   }
 }

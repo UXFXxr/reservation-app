@@ -3,7 +3,7 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
   {
-    // トップページ（一覧）
+    // トップページ（商品一覧）
     path: '',
     loadComponent: () =>
       import('./features/product/product-list/product-list.component').then(
@@ -12,11 +12,19 @@ export const routes: Routes = [
     // 必要なら pathMatch: 'full' を追加（リダイレクトがある場合など）
   },
   {
-    // 商品詳細：id を受け取る
+    // 商品詳細一覧：id を受け取る
     path: 'detail/:id',
     loadComponent: () =>
       import('./features/product/product-detail/product-detail.component').then(
         (m) => m.ProductDetailComponent
+      ),
+  },
+  {
+    // :idパラメータを受け取る
+    path: 'detail/view/:id',
+    loadComponent: () =>
+      import('./features/product/product-detail-view/product-detail-view.component').then(
+        (m) => m.ProductDetailViewComponent
       ),
   },
   {
