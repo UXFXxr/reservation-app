@@ -21,7 +21,7 @@ export const routes: Routes = [
   },
   {
     // :idパラメータを受け取る
-    path: 'detail/view/:id',
+    path: 'view/:id',
     loadComponent: () =>
       import('./features/product/product-detail-view/product-detail-view.component').then(
         (m) => m.ProductDetailViewComponent

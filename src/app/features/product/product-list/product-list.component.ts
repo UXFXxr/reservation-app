@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 // *ngIf/*ngForを使う場合に必要
 import { CommonModule } from '@angular/common';
 // <a [routerLink]="...">でリンクを作る場合に必要
 import { RouterModule } from '@angular/router';
 
 // 商品データをインポート（id を含む）
-import { products, Product } from '../data/products';
+import { ProductService } from '../../../services/product.service';
+import { Product } from '../data/products';
 
 /*
   ProductListComponent
@@ -23,12 +24,14 @@ import { products, Product } from '../data/products';
   templateUrl: './product-list.component.html', // HTMLテンプレートファイル
   styleUrls: ['./product-list.component.scss'], // スタイルファイル
 })
-export class ProductListComponent {
-  /*
-    products配列
-    ダミーデータとして一覧表示
-    実際は ProductServiceを注入してHTTPで取得
-    この変数をテンプレート内で*ngForなどで繰り返し表示
-  */
-  products: Product[] = products;
+export class ProductListComponent implements OnInit {
+  products: Product[] = [];
+
+  constructor(private productService: ProductService) {}
+
+  ngOnInit(): void {
+    this.productService.getProducts().subscribe((data) => {
+      this.products = data; // ← サービス経由でデータ取得
+    });
+  }
 }
