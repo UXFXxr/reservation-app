@@ -1,24 +1,25 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { Product } from '../features/product/data/products';
+import { Product, products } from '../features/product/data/products';
 import { listProducts } from '../features/product/data/list-products';
 
 @Injectable({
-  providedIn: 'root', // アプリ全体で使える
+  providedIn: 'root',
 })
 export class ProductService {
   constructor() {}
 
-  /**
-   * 商品一覧を取得
-   */
-  getProducts(): Observable<Product[]> {
+  /** 一覧ページ用: products.ts を返す */
+  getFullProducts(): Product[] {
+    return products;
+  }
+
+  /** 詳細ページ用: list-products.ts を返す（Observable で返す場合） */
+  getListProducts(): Observable<Product[]> {
     return of(listProducts);
   }
 
-  /**
-   * id 指定で単一商品を取得
-   */
+  /** id 指定で取得（詳細ページ用） */
   getProductById(id: number): Observable<Product | undefined> {
     const product = listProducts.find((p) => p.id === id);
     return of(product);

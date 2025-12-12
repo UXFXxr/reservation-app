@@ -14,27 +14,24 @@ import { Product } from '../data/products';
 })
 export class ProductDetailComponent {
   product?: Product;
-  products: Product[] = [];
   relatedProducts: Product[] = [];
 
-  constructor(
-    private route: ActivatedRoute,
-    private productService: ProductService // ← Service を注入
-  ) {
+  constructor(private route: ActivatedRoute, private productService: ProductService) {
     const idParam = this.route.snapshot.paramMap.get('id');
     const id = idParam ? Number(idParam) : null;
 
     if (id !== null) {
-      // 単一商品を取得
-      this.productService.getProductById(id).subscribe((p) => {
-        this.product = p;
-      });
+      // products.ts から全商品を取得
+      const allProducts = this.productService.getFullProducts(); // Product[] 型
 
-      // 全商品を取得して関連商品を設定
-      this.productService.getProducts().subscribe((all) => {
-        this.products = all;
-        this.relatedProducts = all.filter((p) => p.id !== id);
-      });
+      // 詳細ページ用の商品
+      this.product = allProducts.find((p) => p.id === id);
+
+      // 関連商品（自分以外）
+      this.relatedProducts = allProducts.filter((p) => p.id !== id);
+
+      // 関連商品（自分も含む場合はフィルター不要）
+      // this.relatedProducts = allProducts;
     }
   }
 }

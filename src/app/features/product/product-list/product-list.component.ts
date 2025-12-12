@@ -24,14 +24,11 @@ import { Product } from '../data/products';
   templateUrl: './product-list.component.html', // HTMLテンプレートファイル
   styleUrls: ['./product-list.component.scss'], // スタイルファイル
 })
-export class ProductListComponent implements OnInit {
-  products: Product[] = [];
+export class ProductListComponent {
+  products: Product[];
 
-  constructor(private productService: ProductService) {}
-
-  ngOnInit(): void {
-    this.productService.getProducts().subscribe((data) => {
-      this.products = data; // ← サービス経由でデータ取得
-    });
+  constructor(private productService: ProductService) {
+    // products.ts のデータを直接取得（同期）
+    this.products = this.productService.getFullProducts();
   }
 }

@@ -10,6 +10,8 @@
       <div class="container">
         <!-- 商品がある場合のみ表示 -->
         <div *ngIf="product; else notFound" class="carousel-caption text-left">
+          <!-- 画像表示 -->
+          <img [src]="product.imageUrl" [alt]="product.name" class="img-fluid mb-3" />
           <h1>{{ product.name }}</h1>
 
           <p>{{ product.description || '説明なし' }}</p>
@@ -37,7 +39,7 @@
   <!-- Three columns of text below the carousel -->
   <div class="row">
     <!-- ループ対象を listProducts → products に変更済み -->
-    <div class="col-lg-4" *ngFor="let item of products; let i = index">
+    <div class="col-lg-4" *ngFor="let item of relatedProducts; let i = index">
       <img
         class="rounded-circle"
         [src]="item.imageUrl"
