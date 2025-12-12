@@ -51,7 +51,7 @@
       <pre style="background: #f6f8fa; padding: 8px">{{ item | json }}</pre>
 
       <p>{{ item.description }}</p>
-      <!-- デバッグ用：削除可 -->
+      <p>{{ item.headingTxt }}</p>
       <p>
         <a class="btn btn-primary" [routerLink]="['/view', item.id]" role="button">
           さらに詳細を見る &raquo;
