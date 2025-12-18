@@ -4,9 +4,12 @@ import { CommonModule } from '@angular/common';
 // <a [routerLink]="...">でリンクを作る場合に必要
 import { RouterModule } from '@angular/router';
 
-// 商品データをインポート（id を含む）
+// 商品データをインポート idを含む
 import { ProductService } from '../../../services/product.service';
 import { Product } from '../data/products';
+
+// 文字制限 truncate.pipe.tsを読み込む
+import { TruncatePipe } from '../../../pipes/truncate.pipe';
 
 /*
   ProductListComponent
@@ -20,6 +23,7 @@ import { Product } from '../data/products';
   imports: [
     CommonModule, // *ngFor/*ngIfなどのAngularディレクティブを利用可能にする
     RouterModule, // [routerLink]を使ったリンクを利用可能にする
+    TruncatePipe,
   ],
   templateUrl: './product-list.component.html', // HTMLテンプレートファイル
   styleUrls: ['./product-list.component.scss'], // スタイルファイル

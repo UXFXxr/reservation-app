@@ -43,4 +43,7 @@ testem.log
 Thumbs.db
 
 # Log files 	
-*.log 
+*.log
+
+# Log files 	
+/server/config/dev.js

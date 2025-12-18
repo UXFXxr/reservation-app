@@ -7,10 +7,8 @@
           <img src="./assets/img/300x300.jpg" class="card-img-top" alt="..." />
           <div class="card-body">
             <h5 class="card-title">Card title</h5>
-            <p class="card-text">
-              {{ product.name }}
-            </p>
-            <p>{{ product.description || '説明なし' }}</p>
+            <p class="card-text">{{ product.name | truncate : 60 }}</p>
+            <p>{{ product.description | truncate : 100 }}</p>
           </div>
           <div class="card-footer">
             <small class="text-body-secondary">Last updated 3 mins ago</small>

@@ -1,16 +1,20 @@
 require('dotenv').config(); // .envファイルを読み込む
 
 const express = require('express');
-const app = express();
 const mongoose = require('mongoose');
+const config = require('./config/dev');
+const config = require('./fake-db');
 
-// MongoDB接続部分
+const app = express();
+
+// MongoDB接続
 mongoose
-  .connect(
-    `mongodb+srv://pvt-user:${process.env.DB_PASSWORD}@cluster0.0sicuif.mongodb.net/?appName=Cluster0`
-  )
-  .then(() => console.log('Connected!'))
-  .catch((err) => console.error(err));
+  .connect(config.DB_URI)
+  .then(() => console.log('MongoDB Connected!'))
+  .catch((err) => {
+    console.error('MongoDB connection error:', err.message);
+    process.exit(1);
+  });
 
 // GET /products
 app.get('/products', (req, res) => {
