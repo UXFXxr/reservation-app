@@ -24,10 +24,12 @@ export class ProductDetailComponent implements OnInit {
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
+    console.log('取得したID:', id);
 
     if (id) {
       // 1件取得 MongoDB用のデータを取得
       this.product$ = this.productService.getProductById(id);
+      this.product$.subscribe((product) => console.log('取得した商品:', product));
 
       // 関連商品 自分も含む list-products.tsのデータを取得
       this.relatedProducts$ = this.productService.getProducts$();

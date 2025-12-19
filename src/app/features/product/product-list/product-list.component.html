@@ -1,6 +1,7 @@
 <div class="row row-cols-1 row-cols-md-4 g-4">
   <div *ngFor="let product of products$ | async">
     <div class="col">
+      <!-- _idをURLに渡す64f000000000000000000001 -->
       <a [routerLink]="['/detail', product._id]">
         <div class="card h-100">
           <img src="./assets/img/300x300.jpg" class="card-img-top" alt="..." />

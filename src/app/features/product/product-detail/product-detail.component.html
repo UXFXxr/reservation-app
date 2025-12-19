@@ -10,21 +10,11 @@
       <div class="container">
         <!-- 商品がある場合のみ表示 -->
         <div *ngIf="product$ | async as product; else notFound" class="carousel-caption text-left">
-          <!-- 画像表示 -->
           <img [src]="product.imageUrl" [alt]="product.name" class="img-fluid mb-3" />
           <h1>{{ product.name }}</h1>
-
-          <!-- 商品説明 -->
           <p>{{ product.description || '説明なし' }}</p>
-
-          <!-- 価格 -->
           <p>
             <span class="btn btn-lg btn-primary"> ¥{{ product.price }} </span>
-          </p>
-
-          <!-- 一覧へ戻る -->
-          <p>
-            <a class="btn btn-secondary" routerLink="/">一覧へ戻る</a>
           </p>
         </div>
       </div>
