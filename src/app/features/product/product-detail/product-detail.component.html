@@ -9,15 +9,16 @@
     <div class="carousel-item active">
       <div class="container">
         <!-- 商品がある場合のみ表示 -->
-        <div *ngIf="product; else notFound" class="carousel-caption text-left">
+        <div *ngIf="product$ | async as product; else notFound" class="carousel-caption text-left">
           <!-- 画像表示 -->
           <img [src]="product.imageUrl" [alt]="product.name" class="img-fluid mb-3" />
           <h1>{{ product.name }}</h1>
 
+          <!-- 商品説明 -->
           <p>{{ product.description || '説明なし' }}</p>
 
+          <!-- 価格 -->
           <p>
-            <!-- href="#" は削除（重要） -->
             <span class="btn btn-lg btn-primary"> ¥{{ product.price }} </span>
           </p>
 
@@ -39,26 +40,16 @@
   <!-- Three columns of text below the carousel -->
   <div class="row">
     <!-- ループ対象を listProducts → products に変更済み -->
-    <div class="col-lg-4" *ngFor="let item of relatedProducts; let i = index">
-      <img
-        class="rounded-circle"
-        [src]="item.imageUrl"
-        alt="{{ item.name }}"
-        width="230"
-        height="230"
-      />
-      <h2>{{ item.name }}</h2>
-
-      <!-- デバッグ用：削除可 -->
-      <pre style="background: #f6f8fa; padding: 8px">{{ item | json }}</pre>
-
-      <p>{{ item.description }}</p>
-      <p>{{ item.headingTxt }}</p>
-      <p>
-        <a class="btn btn-primary" [routerLink]="['/view', item.id]" role="button">
-          さらに詳細を見る &raquo;
-        </a>
-      </p>
+    <div class="col" *ngFor="let item of relatedProducts$ | async; let i = index">
+      <div class="h-100">
+        <img [src]="item.imageUrl" class="card-img-top" alt="{{ item.name }}" />
+        <div class="card-body">
+          <h5 class="card-title">{{ item.name }}</h5>
+          <p class="card-text">{{ item.description }}</p>
+          <p class="card-text">{{ item.headingTxt }}</p>
+          <a class="btn btn-primary" [routerLink]="['/view', item._id]">さらに詳細を見る &raquo;</a>
+        </div>
+      </div>
     </div>
   </div>
   <!-- /.row -->

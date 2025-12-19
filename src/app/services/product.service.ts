@@ -1,27 +1,23 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { Product, products } from '../features/product/data/products';
-import { listProducts } from '../features/product/data/list-products';
+import { Product } from '../features/product/models/product.model';
+import { RelatedProduct } from '../features/product/models/related-product.model';
+import { products as htmlProducts } from '../features/product/data/products';
+import { products as mongoProducts } from '../features/product/data/list-products'; // MongoDB用
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class ProductService {
-  constructor() {}
-
-  /** 一覧ページ用: products.ts を返す */
-  getFullProducts(): Product[] {
-    return products;
+  /** MongoDB用 Product[] 取得 */
+  getProducts$(): Observable<Product[]> {
+    return of(mongoProducts);
   }
 
-  /** 詳細ページ用: list-products.ts を返す（Observable で返す場合） */
-  getListProducts(): Observable<Product[]> {
-    return of(listProducts);
+  /** _id 指定で1件取得 */
+  getProductById(_id: string): Observable<Product | undefined> {
+    return of(mongoProducts.find((p) => p._id === _id));
   }
-
-  /** id 指定で取得（詳細ページ用） */
-  getProductById(id: number): Observable<Product | undefined> {
-    const product = listProducts.find((p) => p.id === id);
-    return of(product);
+  /** HTML表示用 RelatedProduct[] 取得 */
+  getHtmlProducts$(): Observable<RelatedProduct[]> {
+    return of(htmlProducts);
   }
 }

@@ -1,0 +1,15 @@
+<div *ngIf="product$ | async as product; else notFound">
+  <h1>{{ product.name }}</h1>
+
+  <img [src]="product.imageUrl" [alt]="product.name" class="img-fluid mb-3" />
+
+  <p>{{ product.description }}</p>
+
+  <p class="fw-bold">¥{{ product.price }}</p>
+
+  <button class="btn btn-secondary" (click)="goBack()">一覧へ戻る</button>
+</div>
+
+<ng-template #notFound>
+  <p>商品が見つかりません</p>
+</ng-template>

@@ -1,11 +1,9 @@
-const Product = require('../data/products');
+const Product = require('../data/products'); // ← mongooseモデル
 
-const Product = require('/');
-class FakeDB {
+class FakeDb {
   constructor() {
     this.products = [
       {
-        id: 1,
         name: 'Phone XL',
         price: 799,
         description: 'A large phone with one of the best screens',
@@ -14,7 +12,6 @@ class FakeDB {
         imageUrl: 'https://via.placeholder.com/230/0000ff/ffffff?text=Standard',
       },
       {
-        id: 2,
         name: 'Phone Mini',
         price: 699,
         description: 'A great phone with one of the best cameras',
@@ -24,7 +21,6 @@ class FakeDB {
         imageUrl: 'https://via.placeholder.com/230/0000ff/ffffff?text=Standard',
       },
       {
-        id: 3,
         name: 'Phone Standard',
         price: 299,
         description: '',
@@ -33,22 +29,20 @@ class FakeDB {
           'サンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキスト',
         imageUrl: 'https://via.placeholder.com/230/0000ff/ffffff?text=Standard',
       },
-      {
-        id: 4,
-        name: 'Phone Standard',
-        price: 299,
-        description: '',
-        heading: 'サンプルテキスト4',
-        headingTxt:
-          'サンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキスト',
-        imageUrl: 'https://via.placeholder.com/230/0000ff/ffffff?text=Standard',
-      },
     ];
   }
-  pushProductsToDb() {
-    this.products.forEach((product) => {
-      const newProduct = new product(product);
-      newProduct.save();
-    });
+
+  // MongoDB にデータ投入（非同期）
+  async secDb() {
+    await Product.deleteMany({});
+
+    for (const product of this.products) {
+      const newProduct = new Product(product);
+      await newProduct.save();
+    }
+
+    console.log('Products seeded');
   }
 }
+
+module.exports = FakeDb;

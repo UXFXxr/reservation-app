@@ -1,14 +1,15 @@
 <div class="row row-cols-1 row-cols-md-4 g-4">
-  <div *ngFor="let product of products; let i = index">
+  <div *ngFor="let product of products$ | async">
     <div class="col">
-      <!-- ['/detail'] app.routes.ts -->
-      <a [routerLink]="['/detail', product.id]">
+      <a [routerLink]="['/detail', product._id]">
         <div class="card h-100">
           <img src="./assets/img/300x300.jpg" class="card-img-top" alt="..." />
           <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">{{ product.name | truncate : 60 }}</p>
-            <p>{{ product.description | truncate : 100 }}</p>
+            <h5 class="card-title">{{ product.name }}</h5>
+            <!-- 文字列を切り詰める -->
+            <p class="card-text">{{ product.description || '' | truncate : 150 }}</p>
+            <!-- 150文字に切り詰め -->
+            <p class="card-text">{{ product.headingTxt }}</p>
           </div>
           <div class="card-footer">
             <small class="text-body-secondary">Last updated 3 mins ago</small>

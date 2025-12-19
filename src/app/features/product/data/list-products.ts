@@ -1,34 +1,22 @@
-// 型は既存の Product 型を使用
-import { Product } from './products';
+import { Product } from '../models/product.model';
 
-// リストページ用の商品データ
-export const listProducts: Product[] = [
+export const products: Product[] = [
   {
-    id: 101,
-    name: 'Custom Product 1',
-    description: 'リストページ用の説明文1',
-    heading: 'リスト用サンプル1',
-    headingTxt: 'サンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキスト',
-    price: 1000,
-    imageUrl: 'https://via.placeholder.com/230',
+    _id: '648a123abc',
+    name: '商品A',
+    price: 1200,
+    description: '商品Aの説明',
+    heading: '新商品',
+    headingTxt: 'おすすめポイントA',
+    imageUrl: './assets/img/productA.jpg',
   },
   {
-    id: 102,
-    name: 'Custom Product 2',
-    description: 'リストページ用の説明文2',
-    heading: 'リスト用サンプル2',
-    headingTxt: 'サンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキスト',
-    price: 2000,
-    imageUrl: 'https://via.placeholder.com/230',
+    _id: '648a124def',
+    name: '商品B',
+    price: 2500,
+    description: '商品Bの説明',
+    heading: '人気商品',
+    headingTxt: 'おすすめポイントB',
+    imageUrl: './assets/img/productB.jpg',
   },
-  {
-    id: 103,
-    name: 'Custom Product 3',
-    description: 'リストページ用の説明文3',
-    heading: 'リスト用サンプル3',
-    headingTxt: 'サンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキスト',
-    price: 1500,
-    imageUrl: 'https://via.placeholder.com/230',
-  },
-  // 必要に応じて追加
 ];

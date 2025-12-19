@@ -3,14 +3,18 @@ require('dotenv').config(); // .envファイルを読み込む
 const express = require('express');
 const mongoose = require('mongoose');
 const config = require('./config/dev');
-const config = require('./fake-db');
+const FakeDb = require('./fake-db');
 
 const app = express();
 
 // MongoDB接続
 mongoose
   .connect(config.DB_URI)
-  .then(() => console.log('MongoDB Connected!'))
+  .then(async () => {
+    console.log('MongoDB Connected!');
+    const fakeDb = new FakeDb();
+    await fakeDb.secDb();
+  })
   .catch((err) => {
     console.error('MongoDB connection error:', err.message);
     process.exit(1);
