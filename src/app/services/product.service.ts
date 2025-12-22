@@ -1,17 +1,45 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+
 import { Product } from '../features/product/models/product.model';
-import { products as mongoProducts } from '../features/product/data/list-products'; // MongoDB用
+import { RelatedProduct } from '../features/product/models/related-product.model';
+
+// トップ一覧用
+import { products as listPageProducts } from '../features/product/data/products';
+
+// 詳細ページ用（MongoDB想定）
+import { products as detailProducts } from '../features/product/data/list-products';
 
 @Injectable({ providedIn: 'root' })
 export class ProductService {
-  /** ID から商品を取得 */
-  getProductById(id: string): Observable<Product | undefined> {
-    return of(mongoProducts.find((p: Product) => p._id.toString() === id));
+  /* ===============================
+   * トップページ一覧
+   * products.ts
+   * =============================== */
+  getProductsForList$(): Observable<Product[]> {
+    return of(listPageProducts);
   }
 
-  /** 商品一覧を取得 */
-  getProducts$(): Observable<Product[]> {
-    return of(mongoProducts);
+  /* ===============================
+   * 詳細ページ上部
+   * list-products.ts
+   * =============================== */
+  getProductById(id: string): Observable<Product | undefined> {
+    return of(listPageProducts.find((p) => p._id === id));
+  }
+
+  /* ===============================
+   * 詳細ページ下部（関連商品）
+   * =============================== */
+  getRelatedProducts$(): Observable<RelatedProduct[]> {
+    return of(
+      detailProducts.map((p) => ({
+        _id: p._id,
+        name: p.name,
+        imageUrl: p.imageUrl,
+        description: p.description,
+        headingTxt: p.headingTxt,
+      }))
+    );
   }
 }

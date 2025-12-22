@@ -3,9 +3,9 @@
     <div class="col">
       <!-- _idをURLに渡す64f000000000000000000001 -->
       <a [routerLink]="['/detail', product._id]">
-        <div class="card h-100">
-          <img src="./assets/img/300x300.jpg" class="card-img-top" alt="..." />
-          <div class="card-body">
+        <img src="./assets/img/300x300.jpg" class="card-img-top" alt="..." />
+        <div class="card rounded-0 h-100">
+          <div class="card-body border-top-0">
             <h5 class="card-title">{{ product.name }}</h5>
             <!-- 文字列を切り詰める -->
             <p class="card-text">{{ product.description || '' | truncate : 150 }}</p>
